@@ -9,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 
 import sunshine.training.com.sunshine_project.R;
 import sunshine.training.com.sunshine_project.Utils.GetData;
 import sunshine.training.com.sunshine_project.Utils.ParseJSONToJava;
-import sunshine.training.com.sunshine_project.Utils.WeatherInfoData;
-import sunshine.training.com.sunshine_project.adapter.WeatherListAdapter;
+import sunshine.training.com.sunshine_project.Utils.WeatherInfoDataTable;
 import sunshine.training.com.sunshine_project.interfaces.OnPostTaskInterface;
 import sunshine.training.com.sunshine_project.model.Weather;
 
@@ -28,16 +26,16 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     private FragmentListForecast.OnFragmentInteractionListener mListener;
     private EditText editTextCityName;
     private Button btnByCityName;
-    private ListView listViewWeather;
-    private TextView textview_city;
-    private TextView textview_country;
-    private WeatherListAdapter weatherListAdapter;
+    private TextView textviewCity;
+    private TextView textviewCountry;
+    private TextView textviewEmptyTable;
+    private TableLayout tableLayoutList;
+    private LinearLayout tableLayoutHeader;
     private GetData getWeatherInfo;
-    Weather weather;
+    private Weather weather;
     private ParseJSONToJava parseJSONToJava;
-    OnPostTaskInterface mOnPostTaskInterface;
-    private String rst;
-    private SimpleDateFormat simpleDateFormat;
+    private OnPostTaskInterface mOnPostTaskInterface;
+    private WeatherInfoDataTable weatherTable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,9 +45,11 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
         editTextCityName = (EditText) v.findViewById(R.id.edTextCityName);
         btnByCityName = (Button) v.findViewById(R.id.btnCityName);
-        listViewWeather = (ListView) v.findViewById(R.id.listview_weather);
-        textview_city = (TextView) v.findViewById(R.id.textView_city);
-        textview_country = (TextView) v.findViewById(R.id.textView_country);
+        textviewCity = (TextView) v.findViewById(R.id.textView_city);
+        textviewCountry = (TextView) v.findViewById(R.id.textView_country);
+        textviewEmptyTable = (TextView) v.findViewById(R.id.textview_empty_table);
+        tableLayoutList = (TableLayout) v.findViewById(R.id.response_table_list);
+        tableLayoutHeader = (LinearLayout) v.findViewById(R.id.response_table_list_header);
 
         btnByCityName.setOnClickListener(onClickListenerGetWeather);
         instantiateObjects();
@@ -60,6 +60,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     private void instantiateObjects(){
         mOnPostTaskInterface = this;
         parseJSONToJava = new ParseJSONToJava();
+        weatherTable = new WeatherInfoDataTable();
 
     }
 
@@ -93,12 +94,17 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
     private void convertJSON(String json){
 
-        weather = new Weather();
-        weather = (Weather) parseJSONToJava.convertToJava(json);
-        textview_city.setText(weather.getCity().getName());
-        textview_country.setText(weather.getCity().getCountry());
-        weatherListAdapter = new WeatherListAdapter(getContext(), weather);
-        listViewWeather.setAdapter(weatherListAdapter);
+        try {
+            weather = new Weather();
+            weather = (Weather) parseJSONToJava.convertToJava(json);
+            tableLayoutHeader.setVisibility(View.VISIBLE);
+            textviewCity.setText(weather.getCity().getName());
+            textviewCountry.setText(weather.getCity().getCountry());
+            weatherTable.getTableWeatherInfo(weather, getContext(), tableLayoutList);
+
+        } catch (Exception e){
+            textviewEmptyTable.setVisibility(View.VISIBLE);
+        }
 
     }
 

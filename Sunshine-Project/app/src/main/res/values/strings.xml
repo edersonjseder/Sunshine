@@ -5,4 +5,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="mountain_view_postal_code">94043</string>
+
+    <string name="textview_header_humidity">Humidity</string>
+    <string name="textview_header_max_temp">Max Temp</string>
+    <string name="textview_header_min_temp">Min Temp</string>
+    <string name="textview_header_night_temp">Night Temp</string>
+    <string name="textview_header_clouds_temp">Clouds</string>
+
+
+    <string name="textview_empty_table">There are no data</string>
+
 </resources>

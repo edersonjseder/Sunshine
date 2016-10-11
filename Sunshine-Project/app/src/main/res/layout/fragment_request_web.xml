@@ -3,29 +3,47 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="66dp"
     android:id="@+id/request_web_id">
 
     <TextView
         android:text="Weather request Web"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/textView_title"
         style="@style/text_title"
         android:textAlignment="center" />
 
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:text="@string/mountain_view_postal_code"
-        android:id="@+id/edTextCityName" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnCityName" />
+        <TextView
+            android:text="Country/Postal Code:"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/textView_label"
+            style="@style/text_label"
+            android:textAlignment="center" />
+
+        <EditText
+            android:layout_width="123dp"
+            android:background="@drawable/edittext_search"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:text="@string/mountain_view_postal_code"
+            android:id="@+id/edTextCityName"
+            android:layout_weight="1.05" />
+
+        <Button
+            android:text="Button"
+            style="@style/button_text"
+            android:background="@drawable/button_search"
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:id="@+id/btnCityName" />
+
+    </LinearLayout>
 
 </LinearLayout>
