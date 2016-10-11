@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import sunshine.training.com.sunshine_project.R;
 import sunshine.training.com.sunshine_project.Utils.GetData;
 import sunshine.training.com.sunshine_project.Utils.ParseJSONToJava;
@@ -27,12 +29,15 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     private EditText editTextCityName;
     private Button btnByCityName;
     private ListView listViewWeather;
+    private TextView textview_city;
+    private TextView textview_country;
     private WeatherListAdapter weatherListAdapter;
     private GetData getWeatherInfo;
     Weather weather;
     private ParseJSONToJava parseJSONToJava;
     OnPostTaskInterface mOnPostTaskInterface;
     private String rst;
+    private SimpleDateFormat simpleDateFormat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,13 +48,19 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
         editTextCityName = (EditText) v.findViewById(R.id.edTextCityName);
         btnByCityName = (Button) v.findViewById(R.id.btnCityName);
         listViewWeather = (ListView) v.findViewById(R.id.listview_weather);
+        textview_city = (TextView) v.findViewById(R.id.textView_city);
+        textview_country = (TextView) v.findViewById(R.id.textView_country);
 
         btnByCityName.setOnClickListener(onClickListenerGetWeather);
+        instantiateObjects();
 
+        return v;
+    }
+
+    private void instantiateObjects(){
         mOnPostTaskInterface = this;
         parseJSONToJava = new ParseJSONToJava();
 
-        return v;
     }
 
     private View.OnClickListener onClickListenerGetWeather = new View.OnClickListener() {
@@ -84,6 +95,8 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
         weather = new Weather();
         weather = (Weather) parseJSONToJava.convertToJava(json);
+        textview_city.setText(weather.getCity().getName());
+        textview_country.setText(weather.getCity().getCountry());
         weatherListAdapter = new WeatherListAdapter(getContext(), weather);
         listViewWeather.setAdapter(weatherListAdapter);
 

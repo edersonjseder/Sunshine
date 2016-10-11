@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import sunshine.training.com.sunshine_project.R;
@@ -20,13 +22,15 @@ import sunshine.training.com.sunshine_project.model.Weather;
 
 public class WeatherListAdapter extends BaseAdapter {
 
-    List<Temp> listWeather;
-    Weather weather;
-    LayoutInflater layoutInflater;
+    private List<Temp> listWeather;
+    private Weather weather;
+    private LayoutInflater layoutInflater;
+    private SimpleDateFormat simpleDateFormat;
 
     public WeatherListAdapter(Context context, Weather weather){
         this.listWeather = weather.getList();
         this.weather = weather;
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -51,9 +55,10 @@ public class WeatherListAdapter extends BaseAdapter {
         View view = layoutInflater.inflate(R.layout.list_item_forecast, parent, false);
         TextView txtName = (TextView) view.findViewById(R.id.list_item_forecast_textview);
         Temp forecast = listWeather.get(position);
+        String date = simpleDateFormat.format(new Date(Long.parseLong(forecast.getDt()) * 1000 ));
 
         if(forecast != null){
-            txtName.setText(forecast.getDt() + " - " + weather.getCity().getName() + ", " + weather.getCity().getCountry() + " - " + forecast.getTemp().getMin() + "/" + forecast.getTemp().getMax());
+            txtName.setText( date + " - " + weather.getCity().getName() + ", " + weather.getCity().getCountry() + " - " + forecast.getTemp().getMin() + "/" + forecast.getTemp().getMax());
         }
 
         return view;

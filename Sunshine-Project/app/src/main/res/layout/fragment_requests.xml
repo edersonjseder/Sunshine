@@ -11,4 +11,6 @@
 
     <include layout="@layout/fragment_response_web" />
 
+    <include layout="@layout/fragment_response_list" />
+
 </FrameLayout>

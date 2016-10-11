@@ -22,7 +22,6 @@ public class GetData extends AsyncTask<String, Void, String> {
     TextView tvResult;
     HttpURLConnection connection = null;
     QueryRequest queryRequest;
-    ParseJSON parseJSON;
     OnPostTaskInterface mOnPostTaskInterface;
 
     public GetData (String cityName, TextView textViewResut){
@@ -38,22 +37,21 @@ public class GetData extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        String resultQuery = "";
         String queryReturn = "";
         String query = null;
         queryRequest = new QueryRequest();
 
         try {
+
             query = Path.URL_PATH + URLEncoder.encode(cityName, "UTF-8") + Path.metricKey + Path.cnt + Path.dummyKey + Path.KEY;
             queryReturn = queryRequest.doQuery(query);
-//            resultQuery += parseJSON.parseAcurateJSON(queryReturn);
-//            weather = (Weather) parseJSONToJava.convertToJava(queryReturn);
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             queryReturn = e.getMessage();
 
         } catch (IOException e) {
+            e.printStackTrace();
             queryReturn = e.getMessage();
 
         } finally {
