@@ -14,6 +14,11 @@ import sunshine.training.com.sunshine_project.model.Weather;
 
 public class ParseJSONToJava {
     private ObjectMapper mapper;
+    private QueryRequest queryRequest;
+
+    public ParseJSONToJava(QueryRequest queryRequest){
+        this.queryRequest = queryRequest;
+    }
 
     /**
      *
@@ -29,6 +34,13 @@ public class ParseJSONToJava {
 
         try {
             weatherObject = mapper.readValue(json, Weather.class);
+
+            for (int i = 0; i < weatherObject.getList().size(); i++){
+                for (int k = 0; k < weatherObject.getList().get(i).getWeather().size(); k++){
+                    byte[] imageIcon = queryRequest.doQueryImage(weatherObject.getList().get(i).getWeather().get(k).getIcon());
+                    weatherObject.getList().get(i).getWeather().get(k).setIconByte(imageIcon);
+                }
+            }
 
         } catch (JsonGenerationException ex) {
             ex.printStackTrace();

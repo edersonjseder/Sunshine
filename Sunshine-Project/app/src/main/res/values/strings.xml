@@ -6,10 +6,10 @@
 
     <string name="mountain_view_postal_code">94043</string>
 
-    <string name="textview_header_humidity">Humidity</string>
-    <string name="textview_header_max_temp">Max Temp</string>
-    <string name="textview_header_min_temp">Min Temp</string>
-    <string name="textview_header_night_temp">Night Temp</string>
+    <string name="textview_header_date">Date</string>
+    <string name="textview_header_max_temp">Max</string>
+    <string name="textview_header_min_temp">Min</string>
+    <string name="textview_header_night_temp">Night</string>
     <string name="textview_header_clouds_temp">Clouds</string>
 
 

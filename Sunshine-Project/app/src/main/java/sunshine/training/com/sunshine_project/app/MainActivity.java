@@ -8,13 +8,11 @@ import android.os.Bundle;
 import org.json.JSONObject;
 
 import sunshine.training.com.sunshine_project.R;
-import sunshine.training.com.sunshine_project.fragment.FragmentListForecast;
 import sunshine.training.com.sunshine_project.fragment.FragmentRequestWeb;
 
-public class MainActivity extends AppCompatActivity implements FragmentListForecast.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements FragmentRequestWeb.OnFragmentInteractionListener {
 
     private FragmentTransaction transaction;
-    private FragmentListForecast mFragmentListForecast;
     private FragmentRequestWeb mFragmentRequestWeb;
     private JSONObject jsonObject;
 
@@ -33,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements FragmentListForec
      * This method start a fragment from another package
      * **/
     private void startFragmentForecast() {
-//        mFragmentListForecast = new FragmentListForecast();
         mFragmentRequestWeb = new FragmentRequestWeb();
 
         try {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -17,25 +18,24 @@ import sunshine.training.com.sunshine_project.R;
 import sunshine.training.com.sunshine_project.Utils.GetData;
 import sunshine.training.com.sunshine_project.Utils.ParseJSONToJava;
 import sunshine.training.com.sunshine_project.Utils.WeatherInfoDataTable;
+import sunshine.training.com.sunshine_project.adapter.WeatherListAdapter;
 import sunshine.training.com.sunshine_project.interfaces.OnPostTaskInterface;
 import sunshine.training.com.sunshine_project.model.Weather;
 
 
 public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface {
 
-    private FragmentListForecast.OnFragmentInteractionListener mListener;
+    private FragmentRequestWeb.OnFragmentInteractionListener mListener;
     private EditText editTextCityName;
     private Button btnByCityName;
     private TextView textviewCity;
     private TextView textviewCountry;
     private TextView textviewEmptyTable;
-    private TableLayout tableLayoutList;
     private LinearLayout tableLayoutHeader;
+    private ListView listviewWeather;
+    private WeatherListAdapter weatherListAdapter;
     private GetData getWeatherInfo;
-    private Weather weather;
-    private ParseJSONToJava parseJSONToJava;
     private OnPostTaskInterface mOnPostTaskInterface;
-    private WeatherInfoDataTable weatherTable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,8 +48,8 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
         textviewCity = (TextView) v.findViewById(R.id.textView_city);
         textviewCountry = (TextView) v.findViewById(R.id.textView_country);
         textviewEmptyTable = (TextView) v.findViewById(R.id.textview_empty_table);
-        tableLayoutList = (TableLayout) v.findViewById(R.id.response_table_list);
         tableLayoutHeader = (LinearLayout) v.findViewById(R.id.response_table_list_header);
+        listviewWeather = (ListView) v.findViewById(R.id.listview_weather);
 
         btnByCityName.setOnClickListener(onClickListenerGetWeather);
         instantiateObjects();
@@ -59,8 +59,6 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
     private void instantiateObjects(){
         mOnPostTaskInterface = this;
-        parseJSONToJava = new ParseJSONToJava();
-        weatherTable = new WeatherInfoDataTable();
 
     }
 
@@ -88,19 +86,20 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     }
 
     @Override
-    public void onTaskCompleted(String result) {
-        convertJSON(result);
-    }
+    public void onTaskCompleted(Weather weather) {
 
-    private void convertJSON(String json){
 
         try {
-            weather = new Weather();
-            weather = (Weather) parseJSONToJava.convertToJava(json);
-            tableLayoutHeader.setVisibility(View.VISIBLE);
-            textviewCity.setText(weather.getCity().getName());
-            textviewCountry.setText(weather.getCity().getCountry());
-            weatherTable.getTableWeatherInfo(weather, getContext(), tableLayoutList);
+            if (weather != null){
+                weatherListAdapter = new WeatherListAdapter(getContext(), weather);
+                tableLayoutHeader.setVisibility(View.VISIBLE);
+                textviewCity.setText(weather.getCity().getName());
+                textviewCountry.setText(weather.getCity().getCountry());
+                listviewWeather.setAdapter(weatherListAdapter);
+
+            }else{
+                throw new Exception();
+            }
 
         } catch (Exception e){
             textviewEmptyTable.setVisibility(View.VISIBLE);

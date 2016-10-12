@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/response_table_list"
     android:padding="5dp">
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="25dp"
+    android:orientation="vertical"
+    android:id="@+id/response_table_list">
 
     <LinearLayout
         android:id="@+id/response_table_list_header"
@@ -13,10 +18,10 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="@string/textview_header_humidity"
+            android:text="@string/textview_header_date"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/textview_header_humidity"
+            android:id="@+id/textview_header_date"
             android:layout_weight="0.25"
             android:gravity="center"
             style="@style/text_label_table"/>
@@ -26,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/textview_header_max_temp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.15"
             android:gravity="center"
             style="@style/text_label_table"/>
 
@@ -35,42 +40,43 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/textview_header_min_temp"
-            android:layout_weight="0.25"
+            android:layout_weight="0.15"
             android:gravity="center"
             style="@style/text_label_table"/>
 
         <TextView
-            android:text="@string/textview_header_night_temp"
+            android:text="Icon"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/textview_header_night_temp"
+            android:id="@+id/textview_header_icon"
             android:layout_weight="0.25"
-            android:gravity="center"
-            style="@style/text_label_table"/>
-
-        <TextView
-            android:text="@string/textview_header_clouds_temp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/textview_header_clouds_temp"
-            android:layout_weight="0.25"
-            android:gravity="center"
-            style="@style/text_label_table"/>
-
-    </LinearLayout>
-
-    <LinearLayout android:orientation="vertical">
-
-        <TextView
-            android:text="@string/textview_empty_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/textview_empty_table"
-            android:layout_weight="0.25"
-            android:visibility="invisible"
             android:gravity="center"
             style="@style/text_label_table"/>
 
     </LinearLayout>
 
 </TableLayout>
+
+<LinearLayout android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listview_weather"
+        android:choiceMode="singleChoice" />
+
+    <TextView
+        android:text="@string/textview_empty_table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/textview_empty_table"
+        android:layout_weight="0.25"
+        android:visibility="invisible"
+        android:gravity="center"
+        style="@style/text_label_table"/>
+
+</LinearLayout>
+
+</LinearLayout>

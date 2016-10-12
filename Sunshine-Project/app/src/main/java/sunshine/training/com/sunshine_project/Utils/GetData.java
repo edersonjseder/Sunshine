@@ -1,6 +1,7 @@
 package sunshine.training.com.sunshine_project.Utils;
 
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -12,17 +13,21 @@ import sunshine.training.com.sunshine_project.interfaces.OnPostTaskInterface;
 import sunshine.training.com.sunshine_project.model.Weather;
 import sunshine.training.com.sunshine_project.path.Path;
 
+import static java.security.AccessController.getContext;
+
 /**
  * Created by root on 08/10/16.
  */
 
-public class GetData extends AsyncTask<String, Void, String> {
+public class GetData extends AsyncTask<String, Void, Weather> {
 
-    String cityName;
-    TextView tvResult;
-    HttpURLConnection connection = null;
-    QueryRequest queryRequest;
-    OnPostTaskInterface mOnPostTaskInterface;
+    private String cityName;
+    private TextView tvResult;
+    private HttpURLConnection connection = null;
+    private QueryRequest queryRequest;
+    private OnPostTaskInterface mOnPostTaskInterface;
+    private Weather weather;
+    private ParseJSONToJava parseJSONToJava;
 
     public GetData (String cityName, TextView textViewResut){
         this.cityName = cityName;
@@ -35,37 +40,33 @@ public class GetData extends AsyncTask<String, Void, String> {
     }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected Weather doInBackground(String... strings) {
 
         String queryReturn = "";
-        String query = null;
         queryRequest = new QueryRequest();
+        weather = new Weather();
+        parseJSONToJava = new ParseJSONToJava(queryRequest);
 
         try {
+            //Execute connection to get the JSON Object
+            queryReturn = queryRequest.doQuery(cityName);
+            weather = (Weather) parseJSONToJava.convertToJava(queryReturn);
 
-            query = Path.URL_PATH + URLEncoder.encode(cityName, "UTF-8") + Path.metricKey + Path.cnt + Path.dummyKey + Path.KEY;
-            queryReturn = queryRequest.doQuery(query);
 
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            queryReturn = e.getMessage();
+            weather = null;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            queryReturn = e.getMessage();
-
-        } finally {
-            if (connection != null){
-                connection.disconnect();
-            }
         }
 
 
-        return queryReturn;
+        return weather;
     }
 
+
+
     @Override
-    protected void onPostExecute(String result) {
-        mOnPostTaskInterface.onTaskCompleted(result);
+    protected void onPostExecute(Weather weather) {
+        mOnPostTaskInterface.onTaskCompleted(weather);
     }
 }

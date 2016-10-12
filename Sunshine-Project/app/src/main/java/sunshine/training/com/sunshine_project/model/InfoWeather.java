@@ -1,5 +1,8 @@
 package sunshine.training.com.sunshine_project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +14,9 @@ public class InfoWeather implements Serializable {
     private String main;
     private String description;
     private String icon;
+
+  @JsonIgnore
+    private byte[] iconByte;
 
     public Long getId() {
         return id;
@@ -42,5 +48,14 @@ public class InfoWeather implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @JsonIgnore
+    public byte[] getIconByte() {
+        return iconByte;
+    }
+
+    public void setIconByte(byte[] iconByte) {
+        this.iconByte = iconByte;
     }
 }
