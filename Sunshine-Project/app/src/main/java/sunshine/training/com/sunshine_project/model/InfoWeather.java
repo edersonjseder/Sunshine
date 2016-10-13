@@ -1,5 +1,7 @@
 package sunshine.training.com.sunshine_project.model;
 
+import android.graphics.Bitmap;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,7 +18,7 @@ public class InfoWeather implements Serializable {
     private String icon;
 
   @JsonIgnore
-    private byte[] iconByte;
+    private Bitmap iconByte;
 
     public Long getId() {
         return id;
@@ -51,11 +53,11 @@ public class InfoWeather implements Serializable {
     }
 
     @JsonIgnore
-    public byte[] getIconByte() {
+    public Bitmap getIconByte() {
         return iconByte;
     }
 
-    public void setIconByte(byte[] iconByte) {
+    public void setIconByte(Bitmap iconByte) {
         this.iconByte = iconByte;
     }
 }

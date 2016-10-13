@@ -36,6 +36,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     private WeatherListAdapter weatherListAdapter;
     private GetData getWeatherInfo;
     private OnPostTaskInterface mOnPostTaskInterface;
+    private LayoutInflater layoutInflater;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +60,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
     private void instantiateObjects(){
         mOnPostTaskInterface = this;
+        layoutInflater = LayoutInflater.from(getContext());
 
     }
 
@@ -88,14 +90,12 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     @Override
     public void onTaskCompleted(Weather weather) {
 
-
         try {
             if (weather != null){
                 weatherListAdapter = new WeatherListAdapter(getContext(), weather);
                 tableLayoutHeader.setVisibility(View.VISIBLE);
-                textviewCity.setText(weather.getCity().getName());
-                textviewCountry.setText(weather.getCity().getCountry());
                 listviewWeather.setAdapter(weatherListAdapter);
+                showOtherWeatherInfo(weather);
 
             }else{
                 throw new Exception();
@@ -104,6 +104,13 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
         } catch (Exception e){
             textviewEmptyTable.setVisibility(View.VISIBLE);
         }
+
+    }
+
+    // Fill the information of City and Country
+    public void showOtherWeatherInfo(Weather weather){
+        textviewCity.setText(weather.getCity().getName());
+        textviewCountry.setText(weather.getCity().getCountry());
 
     }
 

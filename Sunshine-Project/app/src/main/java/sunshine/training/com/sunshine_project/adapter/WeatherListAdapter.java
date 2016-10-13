@@ -70,12 +70,13 @@ public class WeatherListAdapter extends BaseAdapter {
 
         if(forecast != null){
             textviewDate.setText(date);
-            textviewMaxTemp.setText(forecast.getTemp().getMax().toString());
-            textviewMinTemp.setText(forecast.getTemp().getMin().toString());
+            textviewMaxTemp.setText(roundValues(forecast.getTemp().getMax().toString()));
+            textviewMinTemp.setText(roundValues(forecast.getTemp().getMin().toString()));
 
             for (int i = 0; i < forecast.getWeather().size(); i++){
                 if (forecast.getWeather().get(i).getIconByte() != null) {
-                    Bitmap img = BitmapFactory.decodeByteArray(forecast.getWeather().get(i).getIconByte(), 0, forecast.getWeather().get(i).getIconByte().length);
+//                    Bitmap img = BitmapFactory.decodeByteArray(forecast.getWeather().get(i).getIconByte(), 0, forecast.getWeather().get(i).getIconByte().length);
+                    Bitmap img = forecast.getWeather().get(i).getIconByte();
                     imageView.setImageBitmap(img);
                 }
             }
@@ -83,5 +84,20 @@ public class WeatherListAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    private String roundValues(String value){
+        long rounded = 0;
+        String formatted = "";
+
+        try {
+            rounded = Math.round(Double.parseDouble(value));
+
+        } catch (NumberFormatException e){
+        }
+
+        formatted = String.valueOf(rounded) + "° C";
+
+        return formatted;
     }
 }

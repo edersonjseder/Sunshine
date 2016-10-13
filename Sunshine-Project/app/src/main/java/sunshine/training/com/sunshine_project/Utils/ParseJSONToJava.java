@@ -1,5 +1,7 @@
 package sunshine.training.com.sunshine_project.Utils;
 
+import android.graphics.Bitmap;
+
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +39,7 @@ public class ParseJSONToJava {
 
             for (int i = 0; i < weatherObject.getList().size(); i++){
                 for (int k = 0; k < weatherObject.getList().get(i).getWeather().size(); k++){
-                    byte[] imageIcon = queryRequest.doQueryImage(weatherObject.getList().get(i).getWeather().get(k).getIcon());
+                    Bitmap imageIcon = queryRequest.getImageWithQuery(weatherObject.getList().get(i).getWeather().get(k).getIcon());
                     weatherObject.getList().get(i).getWeather().get(k).setIconByte(imageIcon);
                 }
             }

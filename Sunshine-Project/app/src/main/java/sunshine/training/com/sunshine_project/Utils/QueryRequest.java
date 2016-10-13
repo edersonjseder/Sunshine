@@ -1,10 +1,14 @@
 package sunshine.training.com.sunshine_project.Utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -19,7 +23,7 @@ public class QueryRequest {
 
 
     /**
-     * This method is the responsible for make the connection with the API from the
+     * This method is responsible for make the connection with the API from the
      * Company OpenWeatherMap, available on the web site http://openweathermap.org/ and
      * from there we get the JSON data and use it to be shown on the screen
      *
@@ -34,6 +38,7 @@ public class QueryRequest {
 
     public String doQuery(String cityName) throws IOException {
         HttpURLConnection connection = null;
+        BufferedReader bufferedReader = null;
         String result = "";
         URL url = new URL(Path.URL_PATH + URLEncoder.encode(cityName, "UTF-8") + Path.metricKey + Path.cnt + Path.dummyKey + Path.KEY);
         connection = (HttpURLConnection) url.openConnection();
@@ -42,14 +47,12 @@ public class QueryRequest {
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader, 8192);
+                bufferedReader = new BufferedReader(inputStreamReader, 8192);
                 String line = null;
 
                 while ((line = bufferedReader.readLine()) != null){
                     result += line;
                 }
-
-                bufferedReader.close();
             }
 
         } catch (IOException e) {
@@ -58,6 +61,7 @@ public class QueryRequest {
 
         } finally {
             if (connection != null){
+                bufferedReader.close();
                 connection.disconnect();
             }
         }
@@ -69,6 +73,7 @@ public class QueryRequest {
         HttpURLConnection connection = null;
         ByteArrayOutputStream byteArray = null;
         InputStream inputStream = null;
+        OutputStream outputStream = null;
 
         URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
         connection = (HttpURLConnection) url.openConnection();
@@ -104,4 +109,45 @@ public class QueryRequest {
         return byteArray.toByteArray();
     }
 
+    /**
+     *
+     * This method is responsible for make the connection with the API from the
+     * Company OpenWeatherMap, available on the web site http://openweathermap.org/ and
+     * from there we get the Image data through the String containing the code of image
+     * and use it to be shown on the screen
+     *
+     * @param code
+     * @return
+     * @throws IOException
+     * @Original_Base StackOverflow - http://stackoverflow.com/questions/3090650/android-loading-an-image-from-the-web-with-asynctask
+     */
+    public Bitmap getImageWithQuery(String code) throws IOException {
+        HttpURLConnection connection = null;
+        Bitmap imageBitmap = null;
+        InputStream inputStream = null;
+
+        URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
+        connection = (HttpURLConnection) url.openConnection();
+
+        try{
+
+            inputStream = connection.getInputStream();
+            imageBitmap = BitmapFactory.decodeStream(inputStream);
+
+            if (imageBitmap == null){
+                imageBitmap = null;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            if (connection != null){
+                inputStream.close();
+                connection.disconnect();
+            }
+        }
+
+        return imageBitmap;
+    }
 }
