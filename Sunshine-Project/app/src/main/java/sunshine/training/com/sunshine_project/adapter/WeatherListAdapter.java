@@ -74,7 +74,7 @@ public class WeatherListAdapter extends BaseAdapter {
             textviewMinTemp.setText(forecast.getTemp().getMin().toString());
 
             for (int i = 0; i < forecast.getWeather().size(); i++){
-                if (forecast.getWeather().get(i).getIconByte() != null && forecast.getWeather().get(i).getIconByte().length > 0) {
+                if (forecast.getWeather().get(i).getIconByte() != null) {
                     Bitmap img = BitmapFactory.decodeByteArray(forecast.getWeather().get(i).getIconByte(), 0, forecast.getWeather().get(i).getIconByte().length);
                     imageView.setImageBitmap(img);
                 }

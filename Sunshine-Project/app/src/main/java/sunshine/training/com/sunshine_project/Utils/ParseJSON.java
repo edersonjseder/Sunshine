@@ -35,33 +35,33 @@ public class ParseJSON {
             JSONObject jsonObject = new JSONObject(json);
 
             //Use the method to get the String value from the JSON Object
-            String cod = jsonHelperGetString(jsonObject, "cod");
+            String cod = getStringFromJSONObject(jsonObject, "cod");
 
             if (cod != null){
                 if (cod.equals("200")){
                     resultJSON.append("Name: ");
-                    resultJSON.append(jsonHelperGetString(jsonObject, "name")).append("\n");
+                    resultJSON.append(getStringFromJSONObject(jsonObject, "name")).append("\n");
 
                     //Use the method to get the objects values in the JSON object
-                    JSONObject sys = jsonHelperGetJSONObject(jsonObject, "sys");
+                    JSONObject sys = getObjectFromJSONObject(jsonObject, "sys");
                     resultJSON.append("Country: ");
 
                     if (sys != null){
-                        resultJSON.append(jsonHelperGetString(sys, "country")).append("\n\n");
+                        resultJSON.append(getStringFromJSONObject(sys, "country")).append("\n\n");
                     }
 
-                    JSONObject coord = jsonHelperGetJSONObject(jsonObject, "coord");
+                    JSONObject coord = getObjectFromJSONObject(jsonObject, "coord");
                     resultJSON.append("Coordinates: \n");
 
                     if (coord != null){
                         resultJSON.append("Longitud: ");
-                        resultJSON.append(jsonHelperGetString(coord, "lon")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(coord, "lon")).append("\n");
                         resultJSON.append("Latitud: ");
-                        resultJSON.append(jsonHelperGetString(coord, "lat")).append("\n\n");
+                        resultJSON.append(getStringFromJSONObject(coord, "lat")).append("\n\n");
 
                     }
 
-                    JSONArray weather = jsonHelperGetJSONArray(jsonObject, "weather");
+                    JSONArray weather = getArrayObectFromJSONObject(jsonObject, "weather");
                     resultJSON.append("Weather: \n");
 
                     if(weather != null){
@@ -70,57 +70,57 @@ public class ParseJSON {
 
                             resultJSON.append((i + 1) + "° weather: \n");
                             resultJSON.append("Id: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "id")).append("\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "id")).append("\n");
                             resultJSON.append("Situation: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "main")).append("\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "main")).append("\n");
                             resultJSON.append("Description: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "description")).append("\n\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "description")).append("\n\n");
 
                         }
                     }
 
-                    JSONObject main = jsonHelperGetJSONObject(jsonObject, "main");
+                    JSONObject main = getObjectFromJSONObject(jsonObject, "main");
                     resultJSON.append("Temperature: \n");
 
                     if(main != null){
                         resultJSON.append("Temperature °F: ");
-                        resultJSON.append(jsonHelperGetString(main, "temp")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "temp")).append("\n");
                         resultJSON.append("Pressure: ");
-                        resultJSON.append(jsonHelperGetString(main, "pressure")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "pressure")).append("\n");
                         resultJSON.append("Humidity: ");
-                        resultJSON.append(jsonHelperGetString(main, "humidity")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "humidity")).append("\n");
                         resultJSON.append("Min Temperature °F: ");
-                        resultJSON.append(jsonHelperGetString(main, "temp_min")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "temp_min")).append("\n");
                         resultJSON.append("Max Temperature °F: ");
-                        resultJSON.append(jsonHelperGetString(main, "temp_max")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "temp_max")).append("\n");
                         resultJSON.append("Sea Level: ");
-                        resultJSON.append(jsonHelperGetString(main, "sea_level")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(main, "sea_level")).append("\n");
                         resultJSON.append("Ground Level: ");
-                        resultJSON.append(jsonHelperGetString(main, "grnd_level")).append("\n\n");
+                        resultJSON.append(getStringFromJSONObject(main, "grnd_level")).append("\n\n");
 
                     }
 
-                    JSONObject wind = jsonHelperGetJSONObject(jsonObject, "wind");
+                    JSONObject wind = getObjectFromJSONObject(jsonObject, "wind");
                     resultJSON.append("Wind: \n");
 
                     if(wind != null){
                         resultJSON.append("Speed: ");
-                        resultJSON.append(jsonHelperGetString(wind, "speed")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(wind, "speed")).append("\n");
                         resultJSON.append("Deg: ");
-                        resultJSON.append(jsonHelperGetString(wind, "deg")).append("\n\n");
+                        resultJSON.append(getStringFromJSONObject(wind, "deg")).append("\n\n");
 
                     }
 
-                    JSONObject clouds = jsonHelperGetJSONObject(jsonObject, "clouds");
+                    JSONObject clouds = getObjectFromJSONObject(jsonObject, "clouds");
                     resultJSON.append("Clouds: \n");
 
                     if(clouds != null){
                         resultJSON.append("All: ");
-                        resultJSON.append(jsonHelperGetString(clouds, "all")).append("\n\n");
+                        resultJSON.append(getStringFromJSONObject(clouds, "all")).append("\n\n");
 
                     }
                 } else if (cod.equals("404")){
-                    String message = jsonHelperGetString(jsonObject, "message");
+                    String message = getStringFromJSONObject(jsonObject, "message");
 
                     resultJSON.append("Cod 404: ").append(message);
 
@@ -161,26 +161,26 @@ public class ParseJSON {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
             //Use the method to get the String value from the JSON Object
-            String cod = jsonHelperGetString(jsonObject, "cod");
+            String cod = getStringFromJSONObject(jsonObject, "cod");
 
             if (cod != null) {
                 if (cod.equals("200")) {
 
                     //Use the method to get the objects values in the JSON object
-                    JSONObject city = jsonHelperGetJSONObject(jsonObject, "city");
+                    JSONObject city = getObjectFromJSONObject(jsonObject, "city");
 
                     if (city != null){
                         resultJSON.append("City: ");
-                        resultJSON.append(jsonHelperGetString(city, "name")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(city, "name")).append("\n");
                         resultJSON.append("Country: ");
-                        resultJSON.append(jsonHelperGetString(city, "country")).append("\n");
+                        resultJSON.append(getStringFromJSONObject(city, "country")).append("\n");
 
                     }
 
                     resultJSON.append("Qtde. Days per week: ");
-                    resultJSON.append(jsonHelperGetString(jsonObject, "cnt")).append("\n\n");
+                    resultJSON.append(getStringFromJSONObject(jsonObject, "cnt")).append("\n\n");
 
-                    JSONArray list = jsonHelperGetJSONArray(jsonObject, "list");
+                    JSONArray list = getArrayObectFromJSONObject(jsonObject, "list");
                     resultJSON.append("List: \n");
 
                     if(list != null){
@@ -189,31 +189,31 @@ public class ParseJSON {
 
                             resultJSON.append((i + 1) + "° list: \n");
                             resultJSON.append("Date: ");
-                            String date = simpleDateFormat.format(new Date(Long.parseLong(jsonHelperGetString(thisWeather, "dt")) * 1000 ));
+                            String date = simpleDateFormat.format(new Date(Long.parseLong(getStringFromJSONObject(thisWeather, "dt")) * 1000 ));
                             resultJSON.append(date).append("\n");
 
-                            JSONObject temp = jsonHelperGetJSONObject(thisWeather, "temp");
+                            JSONObject temp = getObjectFromJSONObject(thisWeather, "temp");
                             resultJSON.append("Temperature: \n");
 
                             if(temp != null){
 
                                 resultJSON.append("Day: ");
-                                resultJSON.append(jsonHelperGetString(temp, "day")).append("\n");
+                                resultJSON.append(getStringFromJSONObject(temp, "day")).append("\n");
                                 resultJSON.append("InfoTemp min: ");
-                                resultJSON.append(jsonHelperGetString(temp, "min")).append("\n");
+                                resultJSON.append(getStringFromJSONObject(temp, "min")).append("\n");
                                 resultJSON.append("InfoTemp max: ");
-                                resultJSON.append(jsonHelperGetString(temp, "max")).append("\n");
+                                resultJSON.append(getStringFromJSONObject(temp, "max")).append("\n");
                                 resultJSON.append("Night: ");
-                                resultJSON.append(jsonHelperGetString(temp, "night")).append("\n");
+                                resultJSON.append(getStringFromJSONObject(temp, "night")).append("\n");
                                 resultJSON.append("Morning: ");
-                                resultJSON.append(jsonHelperGetString(temp, "morn")).append("\n");
+                                resultJSON.append(getStringFromJSONObject(temp, "morn")).append("\n");
 
                             }
 
                             resultJSON.append("Humidity: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "humidity")).append("\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "humidity")).append("\n");
 
-                            JSONArray weather = jsonHelperGetJSONArray(thisWeather, "weather");
+                            JSONArray weather = getArrayObectFromJSONObject(thisWeather, "weather");
                             resultJSON.append("Weather: \n");
 
                             if(weather != null){
@@ -222,23 +222,23 @@ public class ParseJSON {
 
                                     resultJSON.append((k + 1) + "° weather: \n");
                                     resultJSON.append("Situation: ");
-                                    resultJSON.append(jsonHelperGetString(inWeather, "main")).append("\n");
+                                    resultJSON.append(getStringFromJSONObject(inWeather, "main")).append("\n");
                                     resultJSON.append("Description: ");
-                                    resultJSON.append(jsonHelperGetString(inWeather, "description")).append("\n");
+                                    resultJSON.append(getStringFromJSONObject(inWeather, "description")).append("\n");
 
                                 }
                             }
 
                             resultJSON.append("Speed: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "speed")).append("\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "speed")).append("\n");
                             resultJSON.append("Clouds: ");
-                            resultJSON.append(jsonHelperGetString(thisWeather, "clouds")).append("\n\n");
+                            resultJSON.append(getStringFromJSONObject(thisWeather, "clouds")).append("\n\n");
 
                         }
                     }
 
                 } else if (cod.equals("404")){
-                    String message = jsonHelperGetString(jsonObject, "message");
+                    String message = getStringFromJSONObject(jsonObject, "message");
 
                     resultJSON.append("Cod 404: ").append(message);
 
@@ -259,16 +259,16 @@ public class ParseJSON {
     /**
      * This method gets the values from JSON Object based on the key name passed by param
      *
-     * @name jsonHelperGetString()
+     * @name getStringFromJSONObject()
      *
-     * @method jsonHelperGetString()
+     * @method getStringFromJSONObject()
      *
      * @param obj
      * @param key
      * @return
      * @Original_Base Android-er - http://android-er.blogspot.com.br/2015/10/android-query-current-weather-using.html
      */
-    private String jsonHelperGetString(JSONObject obj, String key){
+    private String getStringFromJSONObject(JSONObject obj, String key){
         String value = null;
 
         try {
@@ -290,7 +290,7 @@ public class ParseJSON {
      * @return
      * @Original_Base Android-er - http://android-er.blogspot.com.br/2015/10/android-query-current-weather-using.html
      */
-    private JSONObject jsonHelperGetJSONObject(JSONObject obj, String key){
+    private JSONObject getObjectFromJSONObject(JSONObject obj, String key){
         JSONObject object = null;
 
         try {
@@ -312,7 +312,7 @@ public class ParseJSON {
      * @return
      * @Original_Base Android-er - http://android-er.blogspot.com.br/2015/10/android-query-current-weather-using.html
      */
-    private JSONArray jsonHelperGetJSONArray(JSONObject object, String key){
+    private JSONArray getArrayObectFromJSONObject(JSONObject object, String key){
         JSONArray array = null;
 
         try {

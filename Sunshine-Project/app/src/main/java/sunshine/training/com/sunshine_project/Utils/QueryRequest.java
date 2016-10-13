@@ -67,14 +67,17 @@ public class QueryRequest {
 
     public byte[] doQueryImage(String code) throws IOException {
         HttpURLConnection connection = null;
-        URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
-        connection = (HttpURLConnection) url.openConnection();
         ByteArrayOutputStream byteArray = null;
         InputStream inputStream = null;
 
-        try{
+        URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
+        connection = (HttpURLConnection) url.openConnection();
 
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+        try{
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK){
+
                 inputStream = connection.getInputStream();
                 byte[] buffer = new byte[1024];
                 byteArray = new ByteArrayOutputStream();
@@ -83,11 +86,13 @@ public class QueryRequest {
                     byteArray.write(buffer);
                 }
 
-                inputStream.close();
-
             }
 
-        } catch (Throwable e) {
+            inputStream.close();
+
+
+
+        } catch (IOException e) {
             e.printStackTrace();
 
         } finally {
