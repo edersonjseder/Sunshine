@@ -39,36 +39,36 @@ public class QueryRequest {
      */
 
     public String doQuery(String cityName) throws IOException {
-        Log.i(TAG, "/QueryRequest.doQuery() inside method - param value: " +cityName);
+        Log.i(TAG, "QueryRequest.doQuery() inside method - param value: " + cityName);
         HttpURLConnection connection = null;
         BufferedReader bufferedReader = null;
         String result = "";
 
         try{
-            Log.i(TAG, "/QueryRequest.doQuery() inside try/catch block - param value: " +cityName);
+            Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - param value: " +cityName);
             URL url = new URL(Path.URL_PATH + URLEncoder.encode(cityName, "UTF-8") + Path.metricKey + Path.cnt + Path.dummyKey + Path.KEY);
-            Log.i(TAG, "/QueryRequest.doQuery() inside try/catch block - url value: " +url);
+            Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - url value: " +url);
             connection = (HttpURLConnection) url.openConnection();
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                Log.i(TAG, "/QueryRequest.doQuery() inside try/catch block - inside if (" + connection.getResponseCode() + ") == (" + HttpURLConnection.HTTP_OK + ")");
+                Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - inside if (" + connection.getResponseCode() + ") == (" + HttpURLConnection.HTTP_OK + ")");
                 InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader, 8192);
                 String line = null;
 
                 while ((line = bufferedReader.readLine()) != null){
-                    Log.i(TAG, "/QueryRequest.doQuery() inside try/catch block - inside if - while (" + bufferedReader.readLine() + ") != " + null + ": " + line);
+                    Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - inside if - while (" + bufferedReader.readLine() + ") != " + null + ": " + line);
                     result += line;
                 }
             }
 
         } catch (IOException e) {
-            Log.i(TAG, "/QueryRequest.doQuery() inside catch block - message: " + e.getMessage());
+            Log.i(TAG, "QueryRequest.doQuery() inside catch block - message: " + e.getMessage());
             e.printStackTrace();
             result = e.getMessage();
 
         } finally {
-            Log.i(TAG, "/QueryRequest.doQuery() inside finally block");
+            Log.i(TAG, "QueryRequest.doQuery() inside finally block");
             if (connection != null){
                 bufferedReader.close();
                 connection.disconnect();
@@ -134,29 +134,31 @@ public class QueryRequest {
      * @Original_Base StackOverflow - http://stackoverflow.com/questions/3090650/android-loading-an-image-from-the-web-with-asynctask
      */
     public Bitmap getImageWithQuery(String code) throws IOException {
-        Log.i(TAG, "/QueryRequest.getImageWithQuery() inside method - param value: " + code);
+        Log.i(TAG, "QueryRequest.getImageWithQuery() inside method - param value: " + code);
         HttpURLConnection connection = null;
         Bitmap imageBitmap = null;
         InputStream inputStream = null;
 
         try{
-            Log.i(TAG, "/QueryRequest.getImageWithQuery() inside try/catch block - param value: " + code);
+            Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - param value: " + code);
             URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
+            Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - url value: " + url);
             connection = (HttpURLConnection) url.openConnection();
 
             inputStream = connection.getInputStream();
             imageBitmap = BitmapFactory.decodeStream(inputStream);
+            Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - imageBitmap value: " + imageBitmap);
 
             if (imageBitmap == null){
                 imageBitmap = null;
             }
 
         } catch (IOException e) {
-            Log.i(TAG, "/QueryRequest.getImageWithQuery() inside catch block: " + e.getMessage());
+            Log.i(TAG, "QueryRequest.getImageWithQuery() inside catch block: " + e.getMessage());
             e.printStackTrace();
 
         } finally {
-            Log.i(TAG, "/QueryRequest.getImageWithQuery() inside finally block");
+            Log.i(TAG, "QueryRequest.getImageWithQuery() inside finally block");
             if (connection != null){
                 inputStream.close();
                 connection.disconnect();

@@ -4,6 +4,7 @@ package sunshine.training.com.sunshine_project.fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import sunshine.training.com.sunshine_project.model.Weather;
 
 
 public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface {
+    private static final String TAG = "FragmentRequestWeb";
 
     private FragmentRequestWeb.OnFragmentInteractionListener mListener;
     private EditText editTextCityName;
@@ -41,6 +43,8 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "FragmentRequestWeb.onCreateView() - inside method");
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_requests, container, false);
 
@@ -89,7 +93,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
     @Override
     public void onTaskCompleted(Weather weather) {
-
+        Log.i(TAG, "FragmentRequestWeb.onTaskCompleted() inside method - param value: " + weather);
         try {
             if (weather != null){
                 weatherListAdapter = new WeatherListAdapter(getContext(), weather);
@@ -102,6 +106,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
             }
 
         } catch (Exception e){
+            Log.i(TAG, "FragmentRequestWeb.onTaskCompleted() inside catch block - message: " + e.getMessage());
             textviewEmptyTable.setVisibility(View.VISIBLE);
         }
 

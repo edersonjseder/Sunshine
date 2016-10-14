@@ -4,12 +4,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="350dp"
-    android:paddingTop="170dp"
+    android:paddingTop="180dp"
     android:id="@+id/response_list_id">
+
+    <include layout="@layout/fragment_table_list_header" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/listview_weather"
         android:choiceMode="singleChoice" />
 

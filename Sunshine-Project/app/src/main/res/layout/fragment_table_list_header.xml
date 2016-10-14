@@ -4,48 +4,52 @@
     android:layout_width="match_parent"
     android:layout_height="25dp"
     android:orientation="vertical"
-    android:id="@+id/response_table_list"
-    android:padding="5dp">
+    android:id="@+id/response_table_list">
 
     <LinearLayout
         android:id="@+id/response_table_list_header"
-        android:visibility="invisible"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
 
         <TextView
             android:text="@string/textview_header_date"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:id="@+id/textview_header_date"
             android:layout_weight="0.25"
-            android:gravity="center"
+            android:background="@drawable/row_header"
+            android:gravity="center_vertical"
             style="@style/text_label_table"/>
 
         <TextView
             android:text="@string/textview_header_max_temp"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:id="@+id/textview_header_max_temp"
             android:layout_weight="0.15"
-            android:gravity="center"
+            android:background="@drawable/row_header"
+            android:gravity="center_vertical"
             style="@style/text_label_table"/>
 
         <TextView
             android:text="@string/textview_header_min_temp"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:id="@+id/textview_header_min_temp"
             android:layout_weight="0.15"
-            android:gravity="center"
+            android:background="@drawable/row_header"
+            android:gravity="center_vertical"
             style="@style/text_label_table"/>
 
         <TextView
             android:text="Icon"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:id="@+id/textview_header_icon"
             android:layout_weight="0.25"
-            android:gravity="center"
+            android:background="@drawable/row_header"
+            android:gravity="center_vertical"
             style="@style/text_label_table"/>
 
     </LinearLayout>

@@ -3,6 +3,8 @@ package sunshine.training.com.sunshine_project.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import sunshine.training.com.sunshine_project.model.Weather;
  */
 
 public class WeatherListAdapter extends BaseAdapter {
+    private static final String TAG = "WeatherListAdapter";
 
     private List<Temp> listWeather;
     private Weather weather;
@@ -57,6 +60,7 @@ public class WeatherListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.i(TAG, "WeatherListAdapter.getView() inside method - position value: " + position);
 
         View view = layoutInflater.inflate(R.layout.fragment_response_tablerow_list, parent, false);
 
@@ -65,15 +69,30 @@ public class WeatherListAdapter extends BaseAdapter {
         textviewMinTemp = (TextView) view.findViewById(R.id.textview_min_temp);
         imageView = (ImageView) view.findViewById(R.id.weatherIcon);
 
+        // Block to define one row coloured and the other don't
+        if(position % 2 == 0){
+            Log.i(TAG, "WeatherListAdapter.getView() inside if - position value: " + position);
+            view.setBackgroundResource(R.drawable.list_selector_even);
+            textviewDate.setTextColor(Color.BLUE);
+            textviewMaxTemp.setTextColor(Color.BLUE);
+            textviewMinTemp.setTextColor(Color.BLUE);
+        } else {
+            Log.i(TAG, "WeatherListAdapter.getView() inside else - position value: " + position);
+            view.setBackgroundResource(R.drawable.list_selector_odd);
+        }
+
         Temp forecast = listWeather.get(position);
-        String date = simpleDateFormat.format(new Date(Long.parseLong(forecast.getDt()) * 1000 ));
+        Log.i(TAG, "WeatherListAdapter.getView() inside method - listWeather.get(" + position + ") - forecast: " + forecast);
+        String date = formatDate(forecast.getDt());
 
         if(forecast != null){
+            Log.i(TAG, "WeatherListAdapter.getView() inside if - forecast: " + forecast);
             textviewDate.setText(date);
             textviewMaxTemp.setText(roundValues(forecast.getTemp().getMax().toString()));
             textviewMinTemp.setText(roundValues(forecast.getTemp().getMin().toString()));
 
             for (int i = 0; i < forecast.getWeather().size(); i++){
+                Log.i(TAG, "WeatherListAdapter.getView() inside for loop - object size: " + forecast.getWeather().size() + " - count: " + i);
                 if (forecast.getWeather().get(i).getIconByte() != null) {
 //                    Bitmap img = BitmapFactory.decodeByteArray(forecast.getWeather().get(i).getIconByte(), 0, forecast.getWeather().get(i).getIconByte().length);
                     Bitmap img = forecast.getWeather().get(i).getIconByte();
@@ -86,6 +105,7 @@ public class WeatherListAdapter extends BaseAdapter {
         return view;
     }
 
+    // Method to round the double values of temperature
     private String roundValues(String value){
         long rounded = 0;
         String formatted = "";
@@ -94,10 +114,29 @@ public class WeatherListAdapter extends BaseAdapter {
             rounded = Math.round(Double.parseDouble(value));
 
         } catch (NumberFormatException e){
+            e.printStackTrace();
         }
 
         formatted = String.valueOf(rounded) + "° C";
 
         return formatted;
+    }
+
+    // Method to format date to dd/MM/yyyy format
+    private String formatDate(String dateInfo){
+        String date = "";
+
+        try {
+            date = simpleDateFormat.format(new Date(Long.parseLong(dateInfo) * 1000 ));
+
+        } catch (NumberFormatException ex){
+            ex.printStackTrace();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return date;
     }
 }
