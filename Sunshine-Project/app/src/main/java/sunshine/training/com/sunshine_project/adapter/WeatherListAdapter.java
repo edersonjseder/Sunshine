@@ -39,7 +39,6 @@ public class WeatherListAdapter extends BaseAdapter {
     public WeatherListAdapter(Context context, Weather weather){
         this.listWeather = weather.getList();
         this.weather = weather;
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -124,6 +123,7 @@ public class WeatherListAdapter extends BaseAdapter {
 
     // Method to format date to dd/MM/yyyy format
     private String formatDate(String dateInfo){
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String date = "";
 
         try {

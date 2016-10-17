@@ -71,7 +71,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     private View.OnClickListener onClickListenerGetWeather = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            getWeatherInfo = (GetData) new GetData(editTextCityName.getText().toString(), mOnPostTaskInterface);
+            getWeatherInfo = new GetData(getContext(), editTextCityName.getText().toString(), mOnPostTaskInterface);
             getWeatherInfo.execute();
         }
     };
@@ -96,9 +96,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
         Log.i(TAG, "FragmentRequestWeb.onTaskCompleted() inside method - param value: " + weather);
         try {
             if (weather != null){
-                weatherListAdapter = new WeatherListAdapter(getContext(), weather);
-                tableLayoutHeader.setVisibility(View.VISIBLE);
-                listviewWeather.setAdapter(weatherListAdapter);
+
                 showOtherWeatherInfo(weather);
 
             }else{
@@ -113,7 +111,11 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
     }
 
     // Fill the information of City and Country
-    public void showOtherWeatherInfo(Weather weather){
+    public void showOtherWeatherInfo(Weather weather) throws Exception {
+
+        weatherListAdapter = new WeatherListAdapter(getContext(), weather);
+        tableLayoutHeader.setVisibility(View.VISIBLE);
+        listviewWeather.setAdapter(weatherListAdapter);
         textviewCity.setText(weather.getCity().getName());
         textviewCountry.setText(weather.getCity().getCountry());
 

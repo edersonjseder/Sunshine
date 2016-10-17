@@ -2,15 +2,16 @@
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="25dp"
+    android:layout_height="43dp"
     android:orientation="vertical"
     android:id="@+id/response_table_list">
 
     <LinearLayout
         android:id="@+id/response_table_list_header"
         android:orientation="horizontal"
+        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="30dp">
+        android:layout_height="43dp">
 
         <TextView
             android:text="@string/textview_header_date"
