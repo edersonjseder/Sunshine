@@ -19,6 +19,9 @@ import sunshine.training.com.sunshine_project.path.Path;
 import static java.security.AccessController.getContext;
 
 /**
+ * Abstract AsyncTask class to connect to the Weather Website
+ * and get the JSON weather info
+ *
  * Created by root on 08/10/16.
  */
 
@@ -35,11 +38,6 @@ public class GetData extends AsyncTask<String, Void, Weather> {
     private Context context;
     private ProgressDialog progress;
 
-    public GetData (String cityName, TextView textViewResut){
-        this.cityName = cityName;
-        this.tvResult = textViewResut;
-    }
-
     public GetData (Context context, String cityName, OnPostTaskInterface mOnPostTaskInterface){
         Log.i(TAG, "GetData inside constructor - params - (context): " + context + "String: " + cityName);
         this.context = context;
@@ -47,6 +45,9 @@ public class GetData extends AsyncTask<String, Void, Weather> {
         this.mOnPostTaskInterface = mOnPostTaskInterface;
     }
 
+    /**
+     * This method execute the progress bar on layout while process the user request
+     */
     @Override
     protected void onPreExecute() {
         Log.i(TAG, "GetData.onPreExecute() inside method - starting progress bar...");
@@ -58,6 +59,12 @@ public class GetData extends AsyncTask<String, Void, Weather> {
 
     }
 
+    /**
+     * Main method of the class where is executed the background connection task
+     *
+     * @param strings
+     * @return
+     */
     @Override
     protected Weather doInBackground(String... strings) {
         Log.i(TAG, "GetData.doInBackground() inside main method - param: " + strings);
@@ -82,14 +89,20 @@ public class GetData extends AsyncTask<String, Void, Weather> {
         return weather;
     }
 
-
-
+    /**
+     * Method that gets the result of processed data by the doInBackground method
+     *
+     * @param weather
+     */
     @Override
     protected void onPostExecute(Weather weather) {
         Log.i(TAG, "GetData.onPostExecute() inside method - param: " + weather.getCod());
+        // Stops the progress bar
         if (progress.isShowing()){
             progress.dismiss();
         }
+
+        // The data is passed to the Fragment class through here
         mOnPostTaskInterface.onTaskCompleted(weather);
     }
 }

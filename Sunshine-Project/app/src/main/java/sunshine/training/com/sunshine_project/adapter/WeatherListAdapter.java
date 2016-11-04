@@ -21,11 +21,12 @@ import sunshine.training.com.sunshine_project.model.Temp;
 import sunshine.training.com.sunshine_project.model.Weather;
 
 /**
+ * Adapter that holds the list of objects to be shown on the mobile screen
+ *
  * Created by root on 08/10/16.
  */
-
 public class WeatherListAdapter extends BaseAdapter {
-    private static final String TAG = "WeatherListAdapter";
+    private static final String TAG = "WeatherLis tAdapter";
 
     private List<Temp> listWeather;
     private Weather weather;
@@ -39,6 +40,7 @@ public class WeatherListAdapter extends BaseAdapter {
     public WeatherListAdapter(Context context, Weather weather){
         this.listWeather = weather.getList();
         this.weather = weather;
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -61,14 +63,17 @@ public class WeatherListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Log.i(TAG, "WeatherListAdapter.getView() inside method - position value: " + position);
 
+        // Inflate the XML view to fill the rows of the list on the screen
         View view = layoutInflater.inflate(R.layout.fragment_response_tablerow_list, parent, false);
 
+        // Get the components
         textviewDate = (TextView) view.findViewById(R.id.textview_date);
         textviewMaxTemp = (TextView) view.findViewById(R.id.textview_max_temp);
         textviewMinTemp = (TextView) view.findViewById(R.id.textview_min_temp);
         imageView = (ImageView) view.findViewById(R.id.weatherIcon);
 
-        // Block to define one row coloured and the other don't
+        // Block to define if the position is even or odd with "mod" operation,
+        // if it's even, fill the row with even XML style.
         if(position % 2 == 0){
             Log.i(TAG, "WeatherListAdapter.getView() inside if - position value: " + position);
             view.setBackgroundResource(R.drawable.list_selector_even);
@@ -77,13 +82,15 @@ public class WeatherListAdapter extends BaseAdapter {
             textviewMinTemp.setTextColor(Color.BLUE);
         } else {
             Log.i(TAG, "WeatherListAdapter.getView() inside else - position value: " + position);
+            // if it's not, it is used the odd XML style
             view.setBackgroundResource(R.drawable.list_selector_odd);
         }
-
+        // Get the selected posistion from the list
         Temp forecast = listWeather.get(position);
         Log.i(TAG, "WeatherListAdapter.getView() inside method - listWeather.get(" + position + ") - forecast: " + forecast);
         String date = formatDate(forecast.getDt());
 
+        // Fills the list
         if(forecast != null){
             Log.i(TAG, "WeatherListAdapter.getView() inside if - forecast: " + forecast);
             textviewDate.setText(date);
@@ -123,7 +130,6 @@ public class WeatherListAdapter extends BaseAdapter {
 
     // Method to format date to dd/MM/yyyy format
     private String formatDate(String dateInfo){
-        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String date = "";
 
         try {

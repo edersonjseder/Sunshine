@@ -18,13 +18,11 @@ public class MainActivity extends AppCompatActivity implements FragmentRequestWe
 
     private FragmentTransaction transaction;
     private FragmentRequestWeb mFragmentRequestWeb;
-    private JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast_main);
-        jsonObject = null;
 
         if (savedInstanceState == null) {
             startFragmentForecast();
@@ -32,13 +30,13 @@ public class MainActivity extends AppCompatActivity implements FragmentRequestWe
     }
 
     /**
-     * This method start a fragment from another package
-     * **/
+     * This method start the fragment request web
+     *
+     **/
     private void startFragmentForecast() {
         mFragmentRequestWeb = new FragmentRequestWeb();
 
         try {
-
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.container, mFragmentRequestWeb);
             transaction.commit();

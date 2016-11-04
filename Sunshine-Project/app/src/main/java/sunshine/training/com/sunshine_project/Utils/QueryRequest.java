@@ -46,16 +46,21 @@ public class QueryRequest {
 
         try{
             Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - param value: " +cityName);
+            // Gets the URL with the param cityName, and with it concatenated on the url gets the JSON weather info
             URL url = new URL(Path.URL_PATH + URLEncoder.encode(cityName, "UTF-8") + Path.metricKey + Path.cnt + Path.dummyKey + Path.KEY);
             Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - url value: " +url);
+            // Open the connection with the URL here
             connection = (HttpURLConnection) url.openConnection();
 
+            // Check if the open connection is returned
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - inside if (" + connection.getResponseCode() + ") == (" + HttpURLConnection.HTTP_OK + ")");
+                // Gets the JSON info
                 InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader, 8192);
                 String line = null;
 
+                // Read the info here
                 while ((line = bufferedReader.readLine()) != null){
                     Log.i(TAG, "QueryRequest.doQuery() inside try/catch block - inside if - while (" + bufferedReader.readLine() + ") != " + null + ": " + line);
                     result += line;
@@ -141,11 +146,17 @@ public class QueryRequest {
 
         try{
             Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - param value: " + code);
+
+            // Make the image URL through the code number from the JSON file
             URL url = new URL(Path.IMG_URL + code + Path.IMG_URL_EXTENTION);
             Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - url value: " + url);
+
+            // Open the connection with the URL here
             connection = (HttpURLConnection) url.openConnection();
 
+            // Get the input stream from the web
             inputStream = connection.getInputStream();
+            // Decode the input stream to a bitmap image
             imageBitmap = BitmapFactory.decodeStream(inputStream);
             Log.i(TAG, "QueryRequest.getImageWithQuery() inside try/catch block - imageBitmap value: " + imageBitmap);
 

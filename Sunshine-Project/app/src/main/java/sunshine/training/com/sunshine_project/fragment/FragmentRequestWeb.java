@@ -45,7 +45,7 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
                              Bundle savedInstanceState) {
         Log.i(TAG, "FragmentRequestWeb.onCreateView() - inside method");
 
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment here
         View v = inflater.inflate(R.layout.fragment_requests, container, false);
 
         editTextCityName = (EditText) v.findViewById(R.id.edTextCityName);
@@ -68,11 +68,12 @@ public class FragmentRequestWeb extends Fragment implements OnPostTaskInterface 
 
     }
 
+    // OnClick Listener for the button. It's here the Asynctask call
     private View.OnClickListener onClickListenerGetWeather = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             getWeatherInfo = new GetData(getContext(), editTextCityName.getText().toString(), mOnPostTaskInterface);
-            getWeatherInfo.execute();
+            getWeatherInfo.execute(); // This is the method to call the Asynctask thread
         }
     };
 
